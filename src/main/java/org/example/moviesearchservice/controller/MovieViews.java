@@ -17,3 +17,4 @@ public class MovieViews {
         return viewService.viewsOn();
     }
 }
+
