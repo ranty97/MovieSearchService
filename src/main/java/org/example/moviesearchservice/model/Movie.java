@@ -2,8 +2,13 @@ package org.example.moviesearchservice.model;
 
 
 import jakarta.persistence.*;
+import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Data
 @Table(name="movies", schema = "public")
 public class Movie {
 
@@ -29,6 +34,9 @@ public class Movie {
     private double imdbScore;
 
 
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews = new ArrayList<>();
+
     public Movie(String title, String genre, String premiere, String language, int runtime, double imdbScore) {
         this.genre = genre;
         this.title = title;
@@ -38,55 +46,6 @@ public class Movie {
         this.imdbScore = imdbScore;
     }
 
-    public Movie() {
+    public Movie() {}
 
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-    public String getPremiere() {
-        return premiere;
-    }
-
-    public void setPremiere(String premiere) {
-        this.premiere = premiere;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
-    public int getRuntime() {
-        return runtime;
-    }
-
-    public void setRuntime(int runtime) {
-        this.runtime = runtime;
-    }
-
-    public double getImdbScore() {
-        return imdbScore;
-    }
-
-    public void setImdbScore(double imdbScore) {
-        this.imdbScore = imdbScore;
-    }
 }
