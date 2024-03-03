@@ -4,6 +4,7 @@ import org.example.moviesearchservice.model.Movie;
 import org.example.moviesearchservice.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,11 +26,13 @@ public class MovieService {
         return movieRepository.findByTitle(title);
     }
 
+    @Transactional
     public Movie saveMovie(Movie movie) {
         return movieRepository.save(movie);
     }
 
+    @Transactional
     public void deleteMovieByTitle(String title) {
-        movieRepository.deleteMovieByTitle(title);
+        movieRepository.deleteByTitle(title);
     }
 }

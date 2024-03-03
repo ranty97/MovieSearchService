@@ -4,6 +4,7 @@ package org.example.moviesearchservice.controller;
 import org.example.moviesearchservice.model.Movie;
 import org.example.moviesearchservice.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,13 +30,15 @@ public class MovieController {
         return movieService.getMovieByTitle(title);
     }
 
-    @PostMapping
+    @PostMapping("/create")
+    @Transactional
     public Movie saveMovie(@RequestBody Movie movie) {
         return movieService.saveMovie(movie);
     }
 
-    @DeleteMapping("/{title}")
-    public void deleteMovie(@PathVariable String title) {
+    @DeleteMapping("/delete/{title}")
+    @Transactional
+    public void deleteMovie(@PathVariable("title") String title) {
         movieService.deleteMovieByTitle(title);
     }
 }
