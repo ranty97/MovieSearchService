@@ -22,13 +22,13 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
-    public Optional<Movie> getMovieByTitle(String title) {
+    public Movie getMovieByTitle(String title) {
         return movieRepository.findByTitle(title);
     }
 
     @Transactional
-    public Movie saveMovie(Movie movie) {
-        return movieRepository.save(movie);
+    public void saveMovie(Movie movie) {
+        movieRepository.save(movie);
     }
 
     @Transactional

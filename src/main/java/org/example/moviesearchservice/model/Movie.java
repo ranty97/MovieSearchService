@@ -1,15 +1,15 @@
 package org.example.moviesearchservice.model;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Data
-@Table(name="movies", schema = "public")
+@Table(name= "movies")
 public class Movie {
 
     @Id
@@ -22,6 +22,7 @@ public class Movie {
 
     @Column(name = "genre")
     private String genre;
+
     @Column(name = "premiere")
     private String premiere;
 
@@ -30,12 +31,13 @@ public class Movie {
 
     @Column(name = "runtime")
     private int runtime;
-    @Column(name = "imdb_Score")
+
+    @Column(name = "imdb_score")
     private double imdbScore;
 
-
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Review> reviews = new ArrayList<>();
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Review> reviews;
 
     public Movie(String title, String genre, String premiere, String language, int runtime, double imdbScore) {
         this.genre = genre;

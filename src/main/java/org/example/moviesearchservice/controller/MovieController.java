@@ -26,14 +26,26 @@ public class MovieController {
     }
 
     @GetMapping("/{title}")
-    public Optional<Movie> getMovieByTitle(@PathVariable String title) {
+    public Movie getMovieByTitle(@PathVariable String title) {
         return movieService.getMovieByTitle(title);
     }
 
     @PostMapping("/create")
-    @Transactional
-    public Movie saveMovie(@RequestBody Movie movie) {
-        return movieService.saveMovie(movie);
+    public void saveMovie(@RequestParam("title") String title,
+                           @RequestParam("genre") String genre,
+                           @RequestParam("premiere") String premiere,
+                           @RequestParam("language") String language,
+                           @RequestParam("runtime") int runtime,
+                           @RequestParam("imdb_score") double imdbScore
+                           ) {
+        Movie movie = new Movie();
+        movie.setGenre(genre);
+        movie.setTitle(title);
+        movie.setPremiere(premiere);
+        movie.setLanguage(language);
+        movie.setRuntime(runtime);
+        movie.setImdbScore(imdbScore);
+        movieService.saveMovie(movie);
     }
 
     @DeleteMapping("/delete/{title}")
