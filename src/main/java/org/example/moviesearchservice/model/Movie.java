@@ -39,6 +39,16 @@ public class Movie {
     @JsonManagedReference
     private List<Review> reviews;
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "movies_genres",
+            joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id")
+    )
+    @JsonManagedReference
+    private List<Genre> genres;
+
+
     public Movie(String title, String genre, String premiere, String language, int runtime, double imdbScore) {
         this.genre = genre;
         this.title = title;
