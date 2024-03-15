@@ -1,11 +1,8 @@
 package org.example.moviesearchservice.controller;
 
-
-import org.example.moviesearchservice.model.Genre;
 import org.example.moviesearchservice.model.Movie;
 import org.example.moviesearchservice.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,7 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/movies")
 public class MovieController {
-    public final MovieService movieService;
+    private final MovieService movieService;
 
     @Autowired
     public MovieController(MovieService movieService) {
@@ -49,12 +46,7 @@ public class MovieController {
     }
 
     @DeleteMapping("/delete/{title}")
-    @Transactional
     public void deleteMovie(@PathVariable("title") String title) {
         movieService.deleteMovieByTitle(title);
-    }
-    @PostMapping("/genre")
-    public void saveGenre(@RequestBody Movie movie) {
-        movieService.saveMovie(movie);
     }
 }

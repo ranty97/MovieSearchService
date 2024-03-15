@@ -1,34 +1,43 @@
 package org.example.moviesearchservice.controller;
 
-
-import org.example.moviesearchservice.model.Movie;
 import org.example.moviesearchservice.model.Review;
-import org.example.moviesearchservice.service.MovieService;
 import org.example.moviesearchservice.service.ReviewService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 @RestController
-@RequestMapping("/reviews")
+@RequestMapping("/api/reviews")
 public class ReviewController {
 
-    public final MovieService movieService;
-    public final ReviewService reviewService;
+    private final ReviewService reviewService;
 
-    public ReviewController(MovieService movieService, ReviewService reviewService) {
-        this.movieService = movieService;
+    @Autowired
+    public ReviewController(ReviewService reviewService) {
         this.reviewService = reviewService;
     }
 
     @PostMapping("/create")
-    public void saveReview(@RequestParam("text") String text,
+    public Long saveReview(@RequestParam("text") String text,
                            @RequestParam("title") String title) {
-        Review review = new Review();
-        review.setText(text);
-        Movie movie = movieService.getMovieByTitle(title);
+        return reviewService.createReview(text, title);
+    }
 
-        review.setMovie(movie);
+    @GetMapping("/{id}")
+    public Optional<Review> getReviewById(@PathVariable Long id) {
+        return reviewService.getReviewById(id);
+    }
 
-        reviewService.createReview(review);
+    @DeleteMapping("/delete/{id}")
+    public void deleteReview(@PathVariable Long id) {
+        reviewService.deleteReviewById(id);
+    }
+
+    @GetMapping("/")
+    public List<Review> getAllReviews() {
+        return reviewService.getAllReviews();
     }
 
 }
