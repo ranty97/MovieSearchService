@@ -39,7 +39,7 @@ public class GenreController {
 
     @ResponseStatus(HttpStatus.OK)
     @Transactional
-    @PatchMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public void updateGenre(@RequestBody(required = false) List<Long> movies,
                             @PathVariable("id") Long id,
                             @RequestParam("name") String name) {
@@ -48,7 +48,7 @@ public class GenreController {
 
     @ResponseStatus(HttpStatus.OK)
     @Transactional
-    @PutMapping("/relationship")
+    @PatchMapping("/relationship")
     public void addMovieToGenre(@RequestParam("genreId") Long genreId, @RequestParam("movieId") Long movieId) {
         genreService.addMovieToGenre(genreId, movieId);
     }

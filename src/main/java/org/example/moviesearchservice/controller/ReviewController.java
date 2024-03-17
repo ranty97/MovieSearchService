@@ -41,7 +41,7 @@ public class ReviewController {
 
     @ResponseStatus(HttpStatus.OK)
     @Transactional
-    @PatchMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public void updateReview(@PathVariable Long id, @RequestParam("text") String text) {
         reviewService.updateReview(id, text);
     }

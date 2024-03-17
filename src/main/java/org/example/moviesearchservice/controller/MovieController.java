@@ -54,7 +54,7 @@ public class MovieController {
 
     @ResponseStatus(HttpStatus.OK)
     @Transactional
-    @PatchMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public void updateMovie(@PathVariable("id") Long id,
                             @RequestParam("title") String title,
                             @RequestParam("premiere") String premiere,
