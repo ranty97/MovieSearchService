@@ -19,7 +19,5 @@ public class Cache {
         return hashMap.get(key);
     }
 
-    public void removeFromCache(String key) {
-        hashMap.remove(key);
-    }
+    public void removeFromCache(String key) { hashMap.remove(key); }
 }

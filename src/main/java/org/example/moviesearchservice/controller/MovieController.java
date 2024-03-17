@@ -4,6 +4,7 @@ import org.example.moviesearchservice.model.Movie;
 import org.example.moviesearchservice.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,19 +28,21 @@ public class MovieController {
     public List<Movie> getAllSterlingMovies(@RequestParam("genre") String genre) {
         return movieService.getAllSterlingMovies(genre);
     }
-    @GetMapping("/{title}")
-    public Movie getMovieByTitle(@PathVariable String title) {
-        return movieService.getMovieByTitle(title);
+
+    @GetMapping("/{id}")
+    public Movie getMovieByTitle(@PathVariable Long id) {
+        return movieService.getMovieById(id);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
+    @Transactional
     @PostMapping("/create")
     public Long createMovie(@RequestParam("title") String title,
-                           @RequestParam("premiere") String premiere,
-                           @RequestParam("language") String language,
-                           @RequestParam("runtime") int runtime,
-                           @RequestParam("imdb_score") double imdbScore
-                           ) {
+                            @RequestParam("premiere") String premiere,
+                            @RequestParam("language") String language,
+                            @RequestParam("runtime") int runtime,
+                            @RequestParam("imdb_score") double imdbScore
+    ) {
         Movie movie = new Movie();
         movie.setTitle(title);
         movie.setPremiere(premiere);
@@ -50,18 +53,21 @@ public class MovieController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PatchMapping("/update/{title}")
-    public void updateMovie(@PathVariable("title") String title,
+    @Transactional
+    @PatchMapping("/update/{id}")
+    public void updateMovie(@PathVariable("id") Long id,
+                            @RequestParam("title") String title,
                             @RequestParam("premiere") String premiere,
                             @RequestParam("language") String language,
                             @RequestParam("runtime") int runtime,
                             @RequestParam("imdb_score") double imdbScore) {
-        movieService.updateMovieByTitle(title, premiere, language, runtime, imdbScore);
+        movieService.updateMovieById(id, title, premiere, language, runtime, imdbScore);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/delete/{title}")
-    public void deleteMovie(@PathVariable("title") String title) {
-        movieService.deleteMovieByTitle(title);
+    @Transactional
+    @DeleteMapping("/delete/{id}")
+    public void deleteMovie(@PathVariable("id") Long id) {
+        movieService.deleteMovieById(id);
     }
 }

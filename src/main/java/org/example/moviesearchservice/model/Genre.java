@@ -20,7 +20,6 @@ public class Genre {
     private String name;
 
 
-
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "movies_genres",
@@ -29,9 +28,10 @@ public class Genre {
     )
     private List<Movie> movies;
 
-    public Genre() {}
+    public Genre() {
+    }
 
-    public Genre(String name){
+    public Genre(String name) {
         this.name = name;
     }
 }

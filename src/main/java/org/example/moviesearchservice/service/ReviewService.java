@@ -13,6 +13,7 @@ public class ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final MovieService movieService;
+
     @Autowired
     public ReviewService(ReviewRepository reviewRepository, MovieService movieService) {
         this.reviewRepository = reviewRepository;
@@ -23,10 +24,10 @@ public class ReviewService {
         return reviewRepository.findById(id);
     }
 
-    public void createReview(String text, String title) {
+    public void createReview(String text, Long id) {
         Review review = new Review();
         review.setText(text);
-        review.setMovie(movieService.getMovieByTitle(title));
+        review.setMovie(movieService.getMovieById(id));
         reviewRepository.save(review);
     }
 

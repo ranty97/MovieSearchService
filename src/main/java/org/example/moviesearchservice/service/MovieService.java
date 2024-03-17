@@ -26,20 +26,17 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
-    public Movie getMovieByTitle(String title) {
-        return movieRepository.findByTitle(title);
-    }
     public Long createMovie(Movie movie) {
         return movieRepository.save(movie).getId();
     }
 
-    public void deleteMovieByTitle(String title) {
-        movieRepository.deleteByTitle(title);
+    public void deleteMovieById(Long id) {
+        movieRepository.deleteById(id);
     }
+    public void updateMovieById(Long id, String title, String premiere, String language, int runtime, double imdbScore) {
+        Movie oldMovie = getMovieById(id);
 
-    public void updateMovieByTitle(String title, String premiere, String language, int runtime, double imdbScore) {
-        Movie oldMovie = getMovieByTitle(title);
-
+        if (title != null) oldMovie.setTitle(title);
         if (premiere != null) oldMovie.setPremiere(premiere);
         if (language != null) oldMovie.setLanguage(language);
         if (runtime != 0) oldMovie.setRuntime(runtime);
@@ -55,7 +52,7 @@ public class MovieService {
     public List<Movie> getAllSterlingMovies(String genreName) {
         String cacheKey = "genre-" + genreName;
         List<Movie> movies = (List<Movie>) cache.getFromCache(cacheKey);
-        if(movies != null) {
+        if (movies != null) {
             log.info(CACHE_LOG + cacheKey);
             return movies;
         }

@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Data
 @AllArgsConstructor
-@Table(name= "movies")
+@Table(name = "movies")
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,7 +46,6 @@ public class Movie {
     )
     private List<Genre> genres;
 
-
     public Movie(String title, String premiere, String language, int runtime, double imdbScore) {
         this.title = title;
         this.language = language;
@@ -55,6 +54,7 @@ public class Movie {
         this.imdbScore = imdbScore;
     }
 
-    public Movie() {}
+    public Movie() {
+    }
 
 }

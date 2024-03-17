@@ -23,9 +23,9 @@ public class GenreController {
         return genreService.getAllGenres();
     }
 
-    @GetMapping("/{name}")
-    public Genre getGenreByName(@PathVariable String name) {
-        return genreService.getGenreByName(name);
+    @GetMapping("/{id}")
+    public Genre getGenreByName(@PathVariable Long id) {
+        return genreService.getGenreById(id);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -33,11 +33,12 @@ public class GenreController {
     @PostMapping("/create")
     public Long createGenre(@RequestParam("name") String name,
                             @RequestBody(required = false) List<Long> movies
-                            ) {
+    ) {
         return genreService.createGenre(name, movies);
     }
 
     @ResponseStatus(HttpStatus.OK)
+    @Transactional
     @PatchMapping("/update/{id}")
     public void updateGenre(@RequestBody(required = false) List<Long> movies,
                             @PathVariable("id") Long id,
@@ -48,14 +49,14 @@ public class GenreController {
     @ResponseStatus(HttpStatus.OK)
     @Transactional
     @PutMapping("/relationship")
-    public void addMovieToGenre(@RequestParam("genre") String genreName, @RequestParam("movie") String movieName) {
-        genreService.addMovieToGenre(genreName, movieName);
+    public void addMovieToGenre(@RequestParam("genreId") Long genreId, @RequestParam("movieId") Long movieId) {
+        genreService.addMovieToGenre(genreId, movieId);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Transactional
-    @DeleteMapping("/delete/{name}")
-    public void deleteGenre(@PathVariable String name) {
-        genreService.deleteGenreByName(name);
+    @DeleteMapping("/delete/{id}")
+    public void deleteGenre(@PathVariable Long id) {
+        genreService.deleteGenreById(id);
     }
 }
