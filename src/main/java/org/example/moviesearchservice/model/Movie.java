@@ -1,21 +1,18 @@
 package org.example.moviesearchservice.model;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
+@AllArgsConstructor
 @Table(name= "movies")
 public class Movie {
-@JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
@@ -40,13 +37,14 @@ public class Movie {
     @JsonManagedReference
     private List<Review> reviews;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @JsonIgnoreProperties("movies")
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "movies_genres",
             joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id")
     )
-    private Set<Genre> genres = new HashSet<>();
+    private List<Genre> genres;
 
 
     public Movie(String title, String premiere, String language, int runtime, double imdbScore) {

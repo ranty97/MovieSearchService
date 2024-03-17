@@ -2,6 +2,7 @@ package org.example.moviesearchservice.controller;
 
 import org.example.moviesearchservice.model.Genre;
 import org.example.moviesearchservice.service.GenreService;
+import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class GenreController {
         this.genreService = genreService;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<Genre> getAllGenres() {
         return genreService.getAllGenres();
     }
@@ -27,20 +28,16 @@ public class GenreController {
         return genreService.getGenreByName(name);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @Transactional
     @PostMapping("/create")
-    public void createGenre(@RequestParam("name") String name,
-                            @RequestBody List<Long> movies
+    public Long createGenre(@RequestParam("name") String name,
+                            @RequestBody(required = false) List<Long> movies
                             ) {
-        genreService.createGenre(name, movies);
+        return genreService.createGenre(name, movies);
     }
 
-    @Transactional
-    @DeleteMapping("/delete/{name}")
-    public void deleteGenre(@PathVariable String name) {
-        genreService.deleteGenreByName(name);
-    }
-
+    @ResponseStatus(HttpStatus.OK)
     @PatchMapping("/update/{id}")
     public void updateGenre(@RequestBody(required = false) List<Long> movies,
                             @PathVariable("id") Long id,
@@ -48,10 +45,17 @@ public class GenreController {
         genreService.updateGenre(id, name, movies);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @Transactional
     @PutMapping("/relationship")
     public void addMovieToGenre(@RequestParam("genre") String genreName, @RequestParam("movie") String movieName) {
         genreService.addMovieToGenre(genreName, movieName);
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Transactional
+    @DeleteMapping("/delete/{name}")
+    public void deleteGenre(@PathVariable String name) {
+        genreService.deleteGenreByName(name);
+    }
 }
