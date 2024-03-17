@@ -12,5 +12,7 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     void deleteByTitle(String title);
 
     Movie findByTitle(String title);
+
+    Movie findMovieById(Long movieId);
 }
 

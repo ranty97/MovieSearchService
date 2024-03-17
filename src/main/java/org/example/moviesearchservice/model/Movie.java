@@ -1,17 +1,21 @@
 package org.example.moviesearchservice.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
 @Table(name= "movies")
 public class Movie {
-
+@JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
@@ -19,9 +23,6 @@ public class Movie {
 
     @Column(name = "title")
     private String title;
-
-    @Column(name = "genre")
-    private String genre;
 
     @Column(name = "premiere")
     private String premiere;
@@ -39,18 +40,16 @@ public class Movie {
     @JsonManagedReference
     private List<Review> reviews;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JoinTable(
             name = "movies_genres",
             joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id")
     )
-    @JsonManagedReference
-    private List<Genre> genres;
+    private Set<Genre> genres = new HashSet<>();
 
 
-    public Movie(String title, String genre, String premiere, String language, int runtime, double imdbScore) {
-        this.genre = genre;
+    public Movie(String title, String premiere, String language, int runtime, double imdbScore) {
         this.title = title;
         this.language = language;
         this.premiere = premiere;

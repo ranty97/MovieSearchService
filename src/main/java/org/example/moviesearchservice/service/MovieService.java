@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class MovieService {
@@ -34,5 +33,18 @@ public class MovieService {
     @Transactional
     public void deleteMovieByTitle(String title) {
         movieRepository.deleteByTitle(title);
+    }
+
+    public void updateMovieByTitle(String title, String premiere, String language, int runtime, double imdbScore) {
+        Movie movie = getMovieByTitle(title);
+        movie.setPremiere(premiere);
+        movie.setLanguage(language);
+        movie.setRuntime(runtime);
+        movie.setImdbScore(imdbScore);
+        movieRepository.save(movie);
+    }
+
+    public Movie getMovieById(Long movieId) {
+        return movieRepository.findMovieById(movieId);
     }
 }

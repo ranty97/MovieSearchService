@@ -20,9 +20,9 @@ public class ReviewController {
     }
 
     @PostMapping("/create")
-    public Long saveReview(@RequestParam("text") String text,
+    public void saveReview(@RequestParam("text") String text,
                            @RequestParam("title") String title) {
-        return reviewService.createReview(text, title);
+        reviewService.createReview(text, title);
     }
 
     @GetMapping("/{id}")
@@ -38,6 +38,11 @@ public class ReviewController {
     @GetMapping("/")
     public List<Review> getAllReviews() {
         return reviewService.getAllReviews();
+    }
+
+    @PatchMapping("/update/{id}")
+    public void updateReview(@PathVariable Long id, @RequestParam("text") String text) {
+        reviewService.updateReview(id, text);
     }
 
 }

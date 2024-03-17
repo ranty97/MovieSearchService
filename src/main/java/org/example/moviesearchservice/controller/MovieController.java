@@ -29,14 +29,12 @@ public class MovieController {
 
     @PostMapping("/create")
     public void saveMovie(@RequestParam("title") String title,
-                           @RequestParam("genre") String genre,
                            @RequestParam("premiere") String premiere,
                            @RequestParam("language") String language,
                            @RequestParam("runtime") int runtime,
                            @RequestParam("imdb_score") double imdbScore
                            ) {
         Movie movie = new Movie();
-        movie.setGenre(genre);
         movie.setTitle(title);
         movie.setPremiere(premiere);
         movie.setLanguage(language);
@@ -48,5 +46,14 @@ public class MovieController {
     @DeleteMapping("/delete/{title}")
     public void deleteMovie(@PathVariable("title") String title) {
         movieService.deleteMovieByTitle(title);
+    }
+
+    @PatchMapping("/update/{title}")
+    public void updateMovie(@PathVariable("title") String title,
+                            @RequestParam("premiere") String premiere,
+                            @RequestParam("language") String language,
+                            @RequestParam("runtime") int runtime,
+                            @RequestParam("imdb_score") double imdbScore) {
+        movieService.updateMovieByTitle(title, premiere, language, runtime, imdbScore);
     }
 }

@@ -23,11 +23,11 @@ public class ReviewService {
         return reviewRepository.findById(id);
     }
 
-    public Long createReview(String text, String title) {
+    public void createReview(String text, String title) {
         Review review = new Review();
         review.setText(text);
         review.setMovie(movieService.getMovieByTitle(title));
-        return reviewRepository.save(review).getId();
+        reviewRepository.save(review);
     }
 
     public void deleteReviewById(Long id) {
@@ -36,5 +36,11 @@ public class ReviewService {
 
     public List<Review> getAllReviews() {
         return reviewRepository.findAll();
+    }
+
+    public void updateReview(Long id, String text) {
+        Review review = reviewRepository.getReviewById(id);
+        review.setText(text);
+        reviewRepository.save(review);
     }
 }
