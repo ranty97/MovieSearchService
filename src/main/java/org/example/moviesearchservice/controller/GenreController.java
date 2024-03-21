@@ -2,6 +2,7 @@ package org.example.moviesearchservice.controller;
 
 import org.example.moviesearchservice.model.Genre;
 import org.example.moviesearchservice.service.GenreService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,7 @@ import java.util.List;
 public class GenreController {
     private final GenreService genreService;
 
-
+    @Autowired
     public GenreController(GenreService genreService) {
         this.genreService = genreService;
     }
