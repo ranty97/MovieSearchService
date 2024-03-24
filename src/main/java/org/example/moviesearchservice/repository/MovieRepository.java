@@ -13,11 +13,16 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     Movie findMovieById(Long movieId);
 
-    @Query("SELECT DISTINCT m FROM Movie m " +
-            "JOIN m.genres g " +
-            "JOIN m.reviews r " +
-            "WHERE g.name = :genreName " +
-            "GROUP BY m " +
+    @Query("SELECT DISTINCT m FROM Movie m "
+            +
+            "JOIN m.genres g "
+            +
+            "JOIN m.reviews r "
+            +
+            "WHERE g.name = :genreName "
+            +
+            "GROUP BY m "
+            +
             "HAVING COUNT(DISTINCT r) > 0")
     List<Movie> findMoviesWithGenresAndReviews(@Param("genreName") String genreName);
 }

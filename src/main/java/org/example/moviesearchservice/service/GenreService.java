@@ -70,11 +70,13 @@ public class GenreService {
     public void addMovieToGenre(Long genreId, Long movieId) {
         Genre genre = genreRepository.findGenreById(genreId);
         Movie movie = movieService.getMovieById(movieId);
-        if(movie != null && genre != null) {
+        if (movie != null && genre != null) {
             genre.getMovies().add(movie);
             cache.removeFromCache(CACHE_KEY + genreId);
             genreRepository.save(genre);
-        } else throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 }
 

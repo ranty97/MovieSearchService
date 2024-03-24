@@ -24,9 +24,9 @@ public class MovieController {
         return movieService.getAllMovies();
     }
 
-    @GetMapping("/sterlings")
-    public List<Movie> getAllSterlingMovies(@RequestParam("genre") String genre) {
-        return movieService.getAllSterlingMovies(genre);
+    @GetMapping("/with review")
+    public List<Movie> getAllWithReviewMovies(@RequestParam("genre") String genre) {
+        return movieService.getAllWithReviewMovies(genre);
     }
 
     @GetMapping("/{id}")
@@ -64,7 +64,6 @@ public class MovieController {
         movieService.updateMovieById(id, title, premiere, language, runtime, imdbScore);
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @Transactional
     @DeleteMapping("/delete/{id}")
     public void deleteMovie(@PathVariable("id") Long id) {

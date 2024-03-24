@@ -38,7 +38,7 @@ public class Movie {
     private List<Review> reviews;
 
     @JsonIgnoreProperties("movies")
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(
             name = "movies_genres",
             joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),

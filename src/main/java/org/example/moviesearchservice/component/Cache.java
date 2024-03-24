@@ -26,8 +26,7 @@ public class Cache {
         return hashMap.get(key);
     }
 
-    public void removeFromCache(String key) { hashMap.remove(key); }
-
-    public void clearCache() { hashMap.clear(); }
-
+    public void removeFromCache(String key) {
+        hashMap.remove(key);
+    }
 }
