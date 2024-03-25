@@ -34,21 +34,22 @@ public class ReviewController {
     @ResponseStatus(HttpStatus.CREATED)
     @Transactional
     @PostMapping("/create")
-    public void saveReview(@RequestParam("text") String text,
+    public Long createReview(@RequestParam("text") String text,
                            @RequestParam("movie_id") Long movieId) {
-        reviewService.createReview(text, movieId);
+       return reviewService.createReview(text, movieId);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @Transactional
     @PutMapping("/update/{id}")
-    public void updateReview(@PathVariable Long id, @RequestParam("text") String text) {
-        reviewService.updateReview(id, text);
+    public Long updateReview(@PathVariable Long id, @RequestParam("text") String text) {
+        return reviewService.updateReview(id, text);
     }
 
     @Transactional
     @DeleteMapping("/delete/{id}")
-    public void deleteReview(@PathVariable Long id) {
+    public Long deleteReview(@PathVariable Long id) {
         reviewService.deleteReviewById(id);
+        return id;
     }
 }

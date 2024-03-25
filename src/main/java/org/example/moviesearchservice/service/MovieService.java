@@ -32,10 +32,10 @@ public class MovieService {
         movieRepository.deleteById(id);
     }
 
-    public void updateMovieById(Long id, String title, String premiere, String language, int runtime, double imdbScore) {
+    public Long updateMovieById(Long id, String title, String premiere, String language, int runtime, double imdbScore) {
         Movie oldMovie = getMovieById(id);
 
-        if  (title != null) {
+        if (title != null) {
             oldMovie.setTitle(title);
         }
         if (premiere != null) {
@@ -51,7 +51,7 @@ public class MovieService {
             oldMovie.setImdbScore(imdbScore);
         }
 
-        movieRepository.save(oldMovie);
+        return movieRepository.save(oldMovie).getId();
     }
 
     public Movie getMovieById(Long movieId) {

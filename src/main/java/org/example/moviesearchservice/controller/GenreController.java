@@ -41,10 +41,10 @@ public class GenreController {
     @ResponseStatus(HttpStatus.OK)
     @Transactional
     @PutMapping("/update/{id}")
-    public void updateGenre(@RequestBody(required = false) List<Long> movies,
+    public Long updateGenre(@RequestBody(required = false) List<Long> movies,
                             @PathVariable("id") Long id,
                             @RequestParam("name") String name) {
-        genreService.updateGenre(id, name, movies);
+        return genreService.updateGenre(id, name, movies);
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -56,7 +56,8 @@ public class GenreController {
 
     @Transactional
     @DeleteMapping("/delete/{id}")
-    public void deleteGenre(@PathVariable Long id) {
+    public Long deleteGenre(@PathVariable Long id) {
         genreService.deleteGenreById(id);
+        return id;
     }
 }

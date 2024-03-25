@@ -24,11 +24,11 @@ public class ReviewService {
         return Optional.ofNullable(reviewRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("ERROR 500 (not found)")));
     }
 
-    public void createReview(String text, Long id) {
+    public Long createReview(String text, Long id) {
         Review review = new Review();
         review.setText(text);
         review.setMovie(movieService.getMovieById(id));
-        reviewRepository.save(review);
+        return reviewRepository.save(review).getId();
     }
 
     public void deleteReviewById(Long id) {
@@ -39,9 +39,9 @@ public class ReviewService {
         return reviewRepository.findAll();
     }
 
-    public void updateReview(Long id, String text) {
+    public Long updateReview(Long id, String text) {
         Review review = reviewRepository.getReviewById(id);
         review.setText(text);
-        reviewRepository.save(review);
+        return reviewRepository.save(review).getId();
     }
 }

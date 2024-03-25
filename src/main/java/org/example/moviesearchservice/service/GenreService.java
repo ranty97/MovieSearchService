@@ -45,7 +45,7 @@ public class GenreService {
                 movieList.add(movieService.getMovieById(movieId));
             }
             genre.setMovies(movieList);
-            }
+        }
         cache.removeFromCache(CACHE_KEY + name);
         return genreRepository.save(genre).getId();
     }
@@ -54,7 +54,7 @@ public class GenreService {
         genreRepository.deleteById(id);
     }
 
-    public void updateGenre(Long id, String name, List<Long> moviesIds) {
+    public Long updateGenre(Long id, String name, List<Long> moviesIds) {
         Genre genre = genreRepository.findGenreById(id);
         genre.setName(name);
 
@@ -66,7 +66,7 @@ public class GenreService {
             genre.setMovies(movieList);
         }
         cache.removeFromCache(CACHE_KEY + name);
-        genreRepository.save(genre);
+        return genreRepository.save(genre).getId();
     }
 
     public void addMovieToGenre(Long genreId, Long movieId) {

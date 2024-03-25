@@ -55,18 +55,19 @@ public class MovieController {
     @ResponseStatus(HttpStatus.OK)
     @Transactional
     @PutMapping("/update/{id}")
-    public void updateMovie(@PathVariable("id") Long id,
+    public Long updateMovie(@PathVariable("id") Long id,
                             @RequestParam("title") String title,
                             @RequestParam("premiere") String premiere,
                             @RequestParam("language") String language,
                             @RequestParam("runtime") int runtime,
                             @RequestParam("imdb_score") double imdbScore) {
-        movieService.updateMovieById(id, title, premiere, language, runtime, imdbScore);
+        return movieService.updateMovieById(id, title, premiere, language, runtime, imdbScore);
     }
 
     @Transactional
     @DeleteMapping("/delete/{id}")
-    public void deleteMovie(@PathVariable("id") Long id) {
+    public Long deleteMovie(@PathVariable("id") Long id) {
         movieService.deleteMovieById(id);
+        return id;
     }
 }
