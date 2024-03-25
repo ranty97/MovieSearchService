@@ -18,15 +18,15 @@ public class Cache {
         }
     };
 
-    public void addToCache(String key, Object value) {
+    public void put(String key, Object value) {
         hashMap.put(key, value);
     }
 
-    public Object getFromCache(String key) {
+    public Object get(String key) {
         return hashMap.get(key);
     }
 
-    public void removeFromCache(String key) {
+    public void remove(String key) {
         hashMap.remove(key);
     }
 }

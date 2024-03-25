@@ -46,7 +46,7 @@ public class GenreService {
             }
             genre.setMovies(movieList);
         }
-        cache.removeFromCache(CACHE_KEY + name);
+        cache.remove(CACHE_KEY + name);
         return genreRepository.save(genre).getId();
     }
 
@@ -65,7 +65,7 @@ public class GenreService {
             }
             genre.setMovies(movieList);
         }
-        cache.removeFromCache(CACHE_KEY + name);
+        cache.remove(CACHE_KEY + name);
         return genreRepository.save(genre).getId();
     }
 
@@ -74,7 +74,7 @@ public class GenreService {
         Movie movie = movieService.getMovieById(movieId);
         if (movie != null && genre != null) {
             genre.getMovies().add(movie);
-            cache.removeFromCache(CACHE_KEY + genreId);
+            cache.remove(CACHE_KEY + genreId);
             genreRepository.save(genre);
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);

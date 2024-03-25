@@ -60,13 +60,13 @@ public class MovieService {
 
     public List<Movie> getAllWithReviewMovies(String genreName) {
         String cacheKey = "genre-" + genreName;
-        List<Movie> movies = (List<Movie>) cache.getFromCache(cacheKey);
+        List<Movie> movies = (List<Movie>) cache.get(cacheKey);
         if (movies != null) {
             log.info(CACHE_LOG + cacheKey);
             return movies;
         }
         movies = movieRepository.findMoviesWithGenresAndReviews(genreName);
-        cache.addToCache(cacheKey, movies);
+        cache.put(cacheKey, movies);
         return movies;
     }
 }
