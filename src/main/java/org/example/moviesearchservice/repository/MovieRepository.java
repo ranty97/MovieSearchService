@@ -11,8 +11,6 @@ import java.util.List;
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long> {
 
-    Movie findMovieById(Long movieId);
-
     @Query("SELECT DISTINCT m FROM Movie m "
             +
             "JOIN m.genres g "

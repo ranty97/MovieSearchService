@@ -19,7 +19,7 @@ public class ExceptionsHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(RuntimeException.class)
     public ErrorResponse handleInternalServerError(RuntimeException ex) {
-        log.error("error, 500 code");
+        log.error("ERROR, 500 CODE");
         return new ErrorResponse(ex.getMessage());
     }
 
@@ -28,21 +28,21 @@ public class ExceptionsHandler {
             MethodArgumentNotValidException.class, MissingServletRequestParameterException.class,
             ConstraintViolationException.class})
     public ErrorResponse handleBadRequestException(Exception ex) {
-        log.error("error, 400 code");
-        return new ErrorResponse("400 error, BAD REQUEST");
+        log.error("ERROR, 400 CODE");
+        return new ErrorResponse("400 ERROR, BAD REQUEST");
     }
 
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ErrorResponse handleMethodNotAllowed(Exception ex) {
-        log.error("error, 405 code");
-        return new ErrorResponse("405 error, METHOD NOT ALLOWED");
+        log.error("ERROR, 405 CODE");
+        return new ErrorResponse("405 ERROR, METHOD NOT ALLOWED");
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoHandlerFoundException.class)
     public ErrorResponse handlerFoundException(Exception ex) {
-        log.error("error, 404 code");
-        return new ErrorResponse("404 error, NOT FOUND");
+        log.error("ERROR, 404 CODE");
+        return new ErrorResponse("404 ERROR, NOT FOUND");
     }
 }

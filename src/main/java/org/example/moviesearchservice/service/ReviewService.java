@@ -21,7 +21,7 @@ public class ReviewService {
     }
 
     public Optional<Review> getReviewById(Long id) {
-        return reviewRepository.findById(id);
+        return Optional.ofNullable(reviewRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("ERROR 500 (not found)")));
     }
 
     public void createReview(String text, Long id) {

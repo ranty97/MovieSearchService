@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.moviesearchservice.component.Cache;
 import org.example.moviesearchservice.model.Movie;
 import org.example.moviesearchservice.repository.MovieRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +15,6 @@ public class MovieService {
     private final Cache cache;
     private static final String CACHE_LOG = "Data loaded from cache using key: ";
 
-    @Autowired
     public MovieService(MovieRepository movieRepository, Cache cache) {
         this.movieRepository = movieRepository;
         this.cache = cache;
@@ -57,7 +55,7 @@ public class MovieService {
     }
 
     public Movie getMovieById(Long movieId) {
-        return movieRepository.findMovieById(movieId);
+        return movieRepository.findById(movieId).orElseThrow(() -> new IllegalArgumentException("ERROR 500 (not found)"));
     }
 
     public List<Movie> getAllWithReviewMovies(String genreName) {

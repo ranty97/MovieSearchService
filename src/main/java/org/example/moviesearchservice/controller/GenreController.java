@@ -54,7 +54,6 @@ public class GenreController {
         genreService.addMovieToGenre(genreId, movieId);
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @Transactional
     @DeleteMapping("/delete/{id}")
     public void deleteGenre(@PathVariable Long id) {

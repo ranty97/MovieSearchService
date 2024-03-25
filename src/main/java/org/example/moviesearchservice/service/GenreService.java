@@ -1,5 +1,6 @@
 package org.example.moviesearchservice.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.example.moviesearchservice.component.Cache;
 import org.example.moviesearchservice.model.Genre;
 import org.example.moviesearchservice.model.Movie;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class GenreService {
 
     private final GenreRepository genreRepository;
@@ -30,7 +32,7 @@ public class GenreService {
     }
 
     public Genre getGenreById(Long id) {
-        return genreRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return genreRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("ERROR 500 (not found)"));
     }
 
     public Long createGenre(String name, List<Long> moviesIds) {

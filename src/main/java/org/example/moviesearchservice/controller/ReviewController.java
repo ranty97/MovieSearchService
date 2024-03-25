@@ -46,7 +46,6 @@ public class ReviewController {
         reviewService.updateReview(id, text);
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @Transactional
     @DeleteMapping("/delete/{id}")
     public void deleteReview(@PathVariable Long id) {
