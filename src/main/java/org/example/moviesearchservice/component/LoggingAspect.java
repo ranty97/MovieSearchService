@@ -9,9 +9,9 @@ import org.slf4j.LoggerFactory;
 
 @Aspect
 @Component
-public class CrudLoggingAspect {
+public class LoggingAspect {
 
-    private final Logger logger = LoggerFactory.getLogger(CrudLoggingAspect.class);
+    private final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
 
     @Pointcut("execution(* org.example.moviesearchservice.controller.*.create*(..))")
     public void create() {

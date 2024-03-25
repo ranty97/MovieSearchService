@@ -19,7 +19,7 @@ public class GenreController {
         this.genreService = genreService;
     }
 
-    @GetMapping
+    @GetMapping("/")
     public List<Genre> getAllGenres() {
         return genreService.getAllGenres();
     }
