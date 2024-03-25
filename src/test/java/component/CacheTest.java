@@ -33,7 +33,7 @@ public class CacheTest {
         for (int i = 0; i < MAX_CACHE_SIZE + 1; i++) {
             map.put("key" + i, "value" + i);
         }
-        assertEquals(MAX_CACHE_SIZE + 1, map.size());
+        assertEquals(MAX_CACHE_SIZE, map.size());
         map.put("newKey", "newValue");
         assertEquals(MAX_CACHE_SIZE, map.size());
         assertNull(map.get("key0"));
