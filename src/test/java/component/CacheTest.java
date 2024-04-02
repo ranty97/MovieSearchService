@@ -1,6 +1,5 @@
 package component;
 
-
 import org.example.moviesearchservice.component.Cache;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,8 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CacheTest {
     private Cache cache;
@@ -49,4 +47,14 @@ public class CacheTest {
 
         assertEquals(value, retrievedValue);
     }
+
+    @Test
+    void testRemoveKey() {
+        cache.put("key1", "value1");
+        cache.put("key2", "value2");
+        cache.removeNote("key1");
+        assertNull(cache.get("key1"));
+    }
+
 }
+
