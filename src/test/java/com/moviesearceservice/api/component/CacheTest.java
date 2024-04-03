@@ -1,4 +1,4 @@
-package component;
+package com.moviesearceservice.api.component;
 
 import org.example.moviesearchservice.component.Cache;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,4 +57,3 @@ public class CacheTest {
     }
 
 }
-
