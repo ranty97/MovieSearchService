@@ -4,13 +4,17 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Table(name = "movies")
 public class Movie {
     @Id
@@ -45,16 +49,4 @@ public class Movie {
             inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id")
     )
     private List<Genre> genres;
-
-    public Movie(String title, String premiere, String language, int runtime, double imdbScore) {
-        this.title = title;
-        this.language = language;
-        this.premiere = premiere;
-        this.runtime = runtime;
-        this.imdbScore = imdbScore;
-    }
-
-    public Movie() {
-    }
-
 }

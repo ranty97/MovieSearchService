@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 @Component
 public class LoggingAspect {
 
-    public Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
 
     @Pointcut("execution(* org.example.moviesearchservice.controller.*.create*(..))")
     public void create() {

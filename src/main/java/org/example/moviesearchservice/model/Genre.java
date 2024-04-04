@@ -2,12 +2,18 @@ package org.example.moviesearchservice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Table(name = "genres")
 public class Genre {
     @JsonIgnore
@@ -25,11 +31,4 @@ public class Genre {
             inverseJoinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id")
     )
     private List<Movie> movies;
-
-    public Genre() {
-    }
-
-    public Genre(String name) {
-        this.name = name;
-    }
 }

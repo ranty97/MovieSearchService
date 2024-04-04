@@ -3,10 +3,16 @@ package org.example.moviesearchservice.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Table(name = "reviews")
 public class Review {
     @Id
@@ -21,12 +27,4 @@ public class Review {
     @JoinColumn(name = "movie_id", nullable = false)
     @JsonBackReference
     private Movie movie;
-
-    public Review(String comment) {
-        this.text = comment;
-    }
-
-    public Review() {
-    }
-
 }

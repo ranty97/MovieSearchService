@@ -40,8 +40,10 @@ public class ReviewService {
     }
 
     public Long updateReview(Long id, String text) {
-        Review review = reviewRepository.getReviewById(id);
+        Review review = reviewRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Review not found with id: " + id));
         review.setText(text);
-        return reviewRepository.save(review).getId();
+        Review updatedReview = reviewRepository.save(review);
+        return updatedReview.getId();
     }
 }

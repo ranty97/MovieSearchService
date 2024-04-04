@@ -19,7 +19,7 @@ public class GenreService {
     private final GenreRepository genreRepository;
     private final MovieService movieService;
     private final Cache cache;
-    private static final String CACHE_KEY = "genre-";
+    public static final String CACHE_KEY = "genre-";
 
     public GenreService(GenreRepository genreRepository, MovieService movieService, Cache cache) {
         this.genreRepository = genreRepository;
@@ -73,6 +73,9 @@ public class GenreService {
         Genre genre = genreRepository.findGenreById(genreId);
         Movie movie = movieService.getMovieById(movieId);
         if (movie != null && genre != null) {
+            if (genre.getMovies() == null) {
+                genre.setMovies(new ArrayList<>());
+            }
             genre.getMovies().add(movie);
             cache.removeNote(CACHE_KEY + genreId);
             genreRepository.save(genre);

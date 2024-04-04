@@ -4,7 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.moviesearchservice.component.Cache;
 import org.example.moviesearchservice.model.Movie;
 import org.example.moviesearchservice.repository.MovieRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -34,6 +36,10 @@ public class MovieService {
 
     public Long updateMovieById(Long id, String title, String premiere, String language, int runtime, double imdbScore) {
         Movie oldMovie = getMovieById(id);
+
+        if (oldMovie == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie not found");
+        }
 
         if (title != null) {
             oldMovie.setTitle(title);
