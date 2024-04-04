@@ -13,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -120,4 +121,32 @@ class MovieServiceTest {
         // Assert
         assertEquals(cachedMovies, result);
     }
+
+    @Test
+    void testCreateMovies() {
+        // Создание списка фильмов с дубликатами
+        List<Movie> moviesWithDuplicates = Arrays.asList(
+                new Movie(2L, "Title 1", "Premiere 1", "Language 1", 120, 8.5, null, null),
+                new Movie(2L, "Title 1", "Premiere 1", "Language 1", 120, 8.5, null, null),
+                new Movie(1L, "Title 2", "Premiere 2", "Language 2", 120, 8.5, null, null)
+        );
+
+        // Создание списка ожидаемых идентификаторов уникальных фильмов
+        List<Long> expectedIds = Arrays.asList(1L, 2L);
+
+        // Мокирование поведения метода репозитория
+        when(movieRepository.saveAll(anyList())).thenReturn(moviesWithDuplicates.stream()
+                .distinct()
+                .collect(Collectors.toList()));
+
+        // Вызов тестируемого метода
+        List<Long> actualIds = movieService.createMovies(moviesWithDuplicates);
+
+        // Проверка, что метод saveAll был вызван с уникальными фильмами
+        verify(movieRepository, times(1)).saveAll(anyList());
+
+        // Проверка результата
+        assertEquals(expectedIds, actualIds);
+    }
 }
+

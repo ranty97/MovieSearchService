@@ -52,6 +52,13 @@ public class MovieController {
         return movieService.createMovie(movie);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
+    @Transactional
+    @PostMapping("/create/several")
+    public List<Long> createSeveralMovies(@RequestBody List<Movie> movies) {
+        return movieService.createMovies(movies);
+    }
+
     @ResponseStatus(HttpStatus.OK)
     @Transactional
     @PutMapping("/update/{id}")
