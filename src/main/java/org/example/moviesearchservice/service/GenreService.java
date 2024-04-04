@@ -39,12 +39,14 @@ public class GenreService {
         Genre genre = new Genre();
         genre.setName(name);
 
-        if (moviesIds != null) {
+        if (moviesIds != null && !moviesIds.isEmpty()) {
             List<Movie> movieList = new ArrayList<>();
             for (Long movieId : moviesIds) {
                 movieList.add(movieService.getMovieById(movieId));
             }
             genre.setMovies(movieList);
+        } else {
+            genre.setMovies(new ArrayList<>()); // Initialize empty list if moviesIds is null or empty
         }
         cache.removeNote(CACHE_KEY + name);
         return genreRepository.save(genre).getId();

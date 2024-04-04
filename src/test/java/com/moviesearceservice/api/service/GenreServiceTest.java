@@ -11,12 +11,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -135,5 +137,43 @@ class GenreServiceTest {
 
         // Assert
         verify(genreRepository, times(1)).save(genre);
+    }
+
+    @Test
+    void testAddMovieToGenre_NotFound() {
+        // Arrange
+        Long genreId = 1L;
+        Long movieId = 1L;
+
+        // Mocking genre repository to return null
+        when(genreRepository.findGenreById(anyLong())).thenReturn(null);
+        // Mocking movie service to return null
+        when(movieService.getMovieById(anyLong())).thenReturn(null);
+
+        // Act & Assert
+        assertThrows(ResponseStatusException.class, () -> {
+            genreService.addMovieToGenre(genreId, movieId);
+        });
+    }
+
+    @Test
+    void testCreateGenreWithNameAndMovieIds() {
+        String name = "Action";
+        List<Long> movieIds = Arrays.asList(1L, 2L, 3L);
+        Movie movie1 = new Movie(1L, "Movie 1", "2022-01-01", "English", 120, 8.5, null, null);
+        Movie movie2 = new Movie(2L, "Movie 2", "2022-01-01", "English", 120, 8.5, null, null);
+        Movie movie3 = new Movie(3L, "Movie 3", "2022-01-01", "English", 120, 8.5, null, null);
+
+        when(movieService.getMovieById(1L)).thenReturn(movie1);
+        when(movieService.getMovieById(2L)).thenReturn(movie2);
+        when(movieService.getMovieById(3L)).thenReturn(movie3);
+
+        Genre createdGenre = new Genre();
+        createdGenre.setId(123L);
+        when(genreRepository.save(any(Genre.class))).thenReturn(createdGenre);
+
+        Long genreId = genreService.createGenre(name, movieIds);
+
+        assertEquals(123L, genreId.longValue());
     }
 }
