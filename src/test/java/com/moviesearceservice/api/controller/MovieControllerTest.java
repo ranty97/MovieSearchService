@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Arrays;
@@ -23,6 +24,8 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 class MovieControllerTest {
+
+    private MockMvc mockMvc;
 
     @InjectMocks
     private MovieController movieController;
@@ -122,5 +125,16 @@ class MovieControllerTest {
         } catch (ResponseStatusException ex) {
             assertEquals(HttpStatus.OK, ex.getStatusCode());
         }
+    }
+
+    @Test
+    void testCreateSeveralMovies() {
+        List<Movie> movies = Arrays.asList(new Movie(), new Movie());
+
+        when(movieService.createMovies(movies)).thenReturn(Arrays.asList(1L, 2L));
+
+        List<Long> result = movieController.createSeveralMovies(movies);
+
+        assertEquals(Arrays.asList(1L, 2L), result);
     }
 }
