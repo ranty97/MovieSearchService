@@ -1,6 +1,7 @@
 package org.example.moviesearchservice.component;
 
 import jakarta.annotation.PreDestroy;
+import lombok.Getter;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -10,16 +11,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Aspect
+@Getter
 @Component
 public class LoggingAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
 
-    private final RequestCounter counterService;
     private final RequestCounter requestCounter;
 
-    public LoggingAspect(RequestCounter counterService, RequestCounter requestCounter) {
-        this.counterService = counterService;
+    public LoggingAspect(RequestCounter requestCounter) {
         this.requestCounter = requestCounter;
     }
 
@@ -70,6 +70,6 @@ public class LoggingAspect {
 
     @PreDestroy
     public void logRequestCount() {
-        logger.info("Total number of requests: {}", counterService.getCounter());
+        logger.info("Total number of requests: {}", requestCounter.getCounter());
     }
 }
