@@ -1,11 +1,13 @@
 package org.example.moviesearchservice.component;
 
+import jakarta.annotation.PreDestroy;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
@@ -13,8 +15,21 @@ public class LoggingAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
 
+    private final RequestCounter counterService;
+    private final RequestCounter requestCounter;
+
+    public LoggingAspect(RequestCounter counterService, RequestCounter requestCounter) {
+        this.counterService = counterService;
+        this.requestCounter = requestCounter;
+    }
+
     @Pointcut("execution(* org.example.moviesearchservice.controller.*.create*(..))")
     public void create() {
+
+    }
+
+    @Pointcut("execution(* org.example.moviesearchservice.controller.*.get*(..))")
+    public void getEntity() {
 
     }
 
@@ -25,6 +40,11 @@ public class LoggingAspect {
 
     @Pointcut("execution(* org.example.moviesearchservice.controller.*.delete*(..))")
     public void delete() {
+
+    }
+
+    @Pointcut("execution(* org.example.moviesearchservice.exceptions.*.handleInternalServerError*(..))")
+    public void handle() {
 
     }
 
@@ -41,5 +61,15 @@ public class LoggingAspect {
     @AfterReturning(pointcut = "delete()", returning = "result")
     public void logDelete(Object result) {
         logger.info("Deleted: {}", result);
+    }
+
+    @After("create() || getEntity() || update() || delete() || handle()")
+    public void logRequest() {
+        logger.info(String.valueOf(requestCounter.incrementAndGet()));
+    }
+
+    @PreDestroy
+    public void logRequestCount() {
+        logger.info("Total number of requests: {}", counterService.getCounter());
     }
 }

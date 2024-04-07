@@ -150,7 +150,6 @@ class GenreServiceTest {
         // Mocking movie service to return null
         when(movieService.getMovieById(anyLong())).thenReturn(null);
 
-        // Act & Assert
         assertThrows(ResponseStatusException.class, () -> {
             genreService.addMovieToGenre(genreId, movieId);
         });
