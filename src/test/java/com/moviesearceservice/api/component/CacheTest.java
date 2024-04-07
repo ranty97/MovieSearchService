@@ -1,13 +1,15 @@
 package com.moviesearceservice.api.component;
 
 import org.example.moviesearchservice.component.Cache;
+import org.example.moviesearchservice.component.RequestCounter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class CacheTest {
     private Cache cache;
@@ -54,6 +56,19 @@ public class CacheTest {
         cache.put("key2", "value2");
         cache.removeNote("key1");
         assertNull(cache.get("key1"));
+    }
+
+    @Test
+    void testIncrementAndGet() {
+        // Arrange
+        RequestCounter requestCounter = new RequestCounter();
+
+        // Act
+        int initialCount = requestCounter.getCounter().get();
+        int incrementedCount = requestCounter.incrementAndGet();
+
+        // Assert
+        assertEquals(initialCount + 1, incrementedCount, "Incremented count should be initial count + 1");
     }
 
 }

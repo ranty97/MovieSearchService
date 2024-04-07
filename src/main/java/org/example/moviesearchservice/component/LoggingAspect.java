@@ -65,7 +65,7 @@ public class LoggingAspect {
 
     @After("create() || getEntity() || update() || delete() || handle()")
     public void logRequest() {
-        logger.info(String.valueOf(requestCounter.incrementAndGet()));
+        requestCounter.incrementAndGet();
     }
 
     @PreDestroy
