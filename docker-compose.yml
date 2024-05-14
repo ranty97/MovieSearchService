@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    image: ranty97/web-app:latest
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+      - react
+    environment:
+      - SPRING_DATASOURCE_URL= jdbc:mysql://mysql:3306/movie
+      - SPRING_DATASOURCE_USERNAME=ranty
+      - SPRING_DATASOURCE_PASSWORD=holfman87
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 9091
+      MYSQL_ROOT_USER:  root
+      MYSQL_DATABASE: movie
+      MYSQL_USER: ranty
+      MYSQL_PASSWORD: holfman87
+    restart: always
+    expose:
+      - 3306
+    volumes:
+      - ./mysql:/var/lib/mysql
+
+  react:
+    build: /home/ivan/ReactProjects/movie-search-front/api/
+    ports:
+      - "3000:3000"

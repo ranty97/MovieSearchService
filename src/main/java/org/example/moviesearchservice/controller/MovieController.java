@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/movies")
 public class MovieController {
@@ -76,5 +77,12 @@ public class MovieController {
     public Long deleteMovie(@PathVariable("id") Long id) {
         movieService.deleteMovieById(id);
         return id;
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @Transactional
+    @PutMapping("/updateById/{id}")
+    public Long updateMovieById(@PathVariable("id") Long id, @RequestBody Movie movie) {
+        return movieService.updateMovie(id, movie);
     }
 }

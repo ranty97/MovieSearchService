@@ -104,4 +104,19 @@ public class MovieService {
 
         return uniqueMovies.stream().map(Movie::getId).toList();
     }
+
+    public Long updateMovie(Long id, Movie movie) {
+        Movie oldMovie = getMovieById(id);
+        if (oldMovie == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie not found");
+        }
+
+        oldMovie.setTitle(movie.getTitle());
+        oldMovie.setLanguage(movie.getLanguage());
+        oldMovie.setPremiere(movie.getPremiere());
+        oldMovie.setRuntime(movie.getRuntime());
+        oldMovie.setImdbScore(movie.getImdbScore());
+        
+        return movieRepository.save(oldMovie).getId();
+    }
 }
